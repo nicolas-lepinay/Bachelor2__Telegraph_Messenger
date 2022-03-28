@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity() {
         val email = binding.emailRegister.text.toString()
         val password = binding.passwordRegister.text.toString()
 
-        Log.d("Main", "TEST BEFORE")
-
         if(username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "⚠️ Veuillez saisir un nom d'utilisateur, une adresse email et un mot de passe.", Toast.LENGTH_SHORT).show()
             return
@@ -45,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
                 // If registering is successful:
                 Log.d("Main", "Successfully registered with UID: ${it.result.user?.uid}")
-                Log.d("Main", getString(R.string.text_example));
                 Toast.makeText(this, "✔️ Inscription réussie.", Toast.LENGTH_LONG).show()
 
             }
