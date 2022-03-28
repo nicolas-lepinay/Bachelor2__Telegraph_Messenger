@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KotlinMessenger</string>
+    <string name="text_example">This is a test example.</string>
+</resources>

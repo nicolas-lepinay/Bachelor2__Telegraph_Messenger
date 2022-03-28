@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232323"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/usernameRegister"
+        android:layout_width="267dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="244dp"
+        android:background="@drawable/rounded_input"
+        android:ems="10"
+        android:hint="Nom d'utilisateur"
+        android:inputType="textPersonName"
+        android:paddingLeft="58dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#878787"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/emailRegister"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/rounded_input"
+        android:ems="10"
+        android:hint="Adresse e-mail"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="58dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#6B63B5"
+        android:textColorHint="#FF878787"
+        android:textColorLink="#6B63B5"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/usernameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/usernameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/usernameRegister" />
+
+    <EditText
+        android:id="@+id/passwordRegister"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/rounded_input"
+        android:ems="10"
+        android:hint="Mot de passe"
+        android:inputType="textPassword"
+        android:paddingLeft="58dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#6B63B5"
+        android:textColorHint="#FF878787"
+        android:textColorLink="#6B63B5"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/usernameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/usernameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/usernameRegister" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:alpha="0.2"
+        app:layout_constraintBottom_toBottomOf="@+id/usernameRegister"
+        app:layout_constraintStart_toStartOf="@+id/usernameRegister"
+        app:layout_constraintTop_toTopOf="@+id/usernameRegister"
+        app:srcCompat="@drawable/person_material" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:alpha="0.2"
+        app:layout_constraintBottom_toBottomOf="@+id/emailRegister"
+        app:layout_constraintStart_toStartOf="@+id/emailRegister"
+        app:layout_constraintTop_toTopOf="@+id/emailRegister"
+        app:layout_constraintVertical_bias="0.531"
+        app:srcCompat="@drawable/email_material" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:alpha="0.2"
+        app:layout_constraintBottom_toBottomOf="@+id/passwordRegister"
+        app:layout_constraintStart_toStartOf="@+id/passwordRegister"
+        app:layout_constraintTop_toTopOf="@+id/passwordRegister"
+        app:layout_constraintVertical_bias="0.562"
+        app:srcCompat="@drawable/lock_material" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/rounded_gradient_button"
+        android:text="S'inscrire"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#000000"
+        android:textColorLink="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="@+id/passwordRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/passwordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/passwordRegister" />
+
+    <TextView
+        android:id="@+id/loginRedirection"
+        android:layout_width="160dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:letterSpacing="0.2"
+        android:text="Se connecter"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/buttonRegister"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
+
+    <ImageView
+        android:id="@+id/firebaseLogoRegister"
+        android:layout_width="293dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/firebase_auth" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
