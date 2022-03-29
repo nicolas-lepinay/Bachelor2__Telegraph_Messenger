@@ -22,8 +22,9 @@ class LoginActivity: AppCompatActivity() {
         }
 
         binding.registerRedirection.setOnClickListener{
-            // Back to MainActivity layout:
-            finish()
+            // Show RegisterActivity layout:
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -32,7 +33,7 @@ class LoginActivity: AppCompatActivity() {
         val password = binding.passwordLogin.text.toString()
 
         if(email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "⚠️ Veuillez saisir une adresse email et un mot de passe.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.incomplete_login_toast), Toast.LENGTH_SHORT).show()
             return
         }
         // Firebase Auth : sign in user with email and password
@@ -40,13 +41,13 @@ class LoginActivity: AppCompatActivity() {
             .addOnCompleteListener{
                 if (!it.isSuccessful) return@addOnCompleteListener
                 // If registering is successful:
-                Log.d("Main", "Successfully signed in.")
-                Toast.makeText(this, "✔️ Connexion réussie.", Toast.LENGTH_LONG).show()
+                Log.d("Main", getString(R.string.successful_login_log))
+                Toast.makeText(this, getString(R.string.successful_login_toast), Toast.LENGTH_LONG).show()
 
             }
             .addOnFailureListener{
-                Log.d("Main", "Failed while attempting to log in user. Error: ${it.message}")
-                Toast.makeText(this, "❌  Echec lors de la connexion.", Toast.LENGTH_SHORT).show()
+                Log.d("Main", getString(R.string.failed_login_log) + it.message)
+                Toast.makeText(this, getString(R.string.failed_login_toast), Toast.LENGTH_SHORT).show()
             }
     }
 

@@ -8,14 +8,14 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/firebaseLogoLogin"
-        android:layout_width="293dp"
-        android:layout_height="90dp"
+        android:id="@+id/telegraphLogo"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/firebase_auth" />
+        app:srcCompat="@drawable/telegraph_logo" />
 
     <EditText
         android:id="@+id/emailLogin"

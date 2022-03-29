@@ -48,5 +48,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:20.1.1' // FIREBASE
     implementation 'com.google.firebase:firebase-bom:29.2.1' // FIREBASE
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.2' // FIREBASE AUTH
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1' // FIREBASE STORAGE
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.3' // FIREBASE DATABASE
     implementation 'com.google.android.material:material:1.6.0-beta01' // Android Material components
 }

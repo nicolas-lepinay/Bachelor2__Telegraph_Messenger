@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#232323"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <EditText
         android:id="@+id/usernameRegister"
@@ -144,16 +144,14 @@
         app:layout_constraintStart_toStartOf="@+id/buttonRegister"
         app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
 
-
     <Button
-        android:id="@+id/avatarButton"
+        android:id="@+id/avatarRegister"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginTop="52dp"
         android:background="@drawable/circle_shape"
         android:letterSpacing="0.3"
-        android:lineSpacingMultiplier="1.8"
-        android:textColor="#C8C8C8"
+        android:text="Photo"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/usernameRegister"
@@ -161,8 +159,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Photo" />
-
+        app:layout_constraintVertical_bias="0.421" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">KotlinMessenger</string>
+    <string name="incomplete_registration_toast">⚠️ Veuillez saisir un nom d\'utilisateur, une adresse email et un mot de passe.</string>
+    <string name="successful_registration_log">Successfully registered with UID: </string>
+    <string name="successful_registration_toast">✔️ Inscription réussie.</string>
+    <string name="failed_registration_log">Failed while attempting to register user. Error: </string>
+    <string name="failed_registration_toast">❌  Echec lors de l\'inscription. Veuillez vérifier que votre adresse email est valide.</string>
+
+    <string name="incomplete_login_toast">⚠️ Veuillez saisir une adresse email et un mot de passe.</string>
+    <string name="successful_login_log">Successfully signed in.</string>
+    <string name="successful_login_toast">✔️ Connexion réussie.</string>
+    <string name="failed_login_log">"Failed while attempting to log in user. Error: </string>
+    <string name="failed_login_toast">❌  Echec lors de l\'inscription. Veuillez vérifier que votre adresse email est valide.</string>
+    <string name="successful_avatar_selection">Image selected successfully.</string>
+    <string name="failed_photo_uploading_log">Attempt to upload photo to Firebase has failed.</string>
 </resources>
