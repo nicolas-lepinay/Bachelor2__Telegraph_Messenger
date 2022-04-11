@@ -40,10 +40,14 @@ class LoginActivity: AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{
                 if (!it.isSuccessful) return@addOnCompleteListener
-                // If registering is successful:
+                // Show successful login message :
                 Log.d("Main", getString(R.string.successful_login_log))
                 Toast.makeText(this, getString(R.string.successful_login_toast), Toast.LENGTH_LONG).show()
 
+                // Open LatestMessages activity :
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK) // Clear all former activities so Back button closes the application
+                startActivity(intent)
             }
             .addOnFailureListener{
                 Log.d("Main", getString(R.string.failed_login_log) + it.message)

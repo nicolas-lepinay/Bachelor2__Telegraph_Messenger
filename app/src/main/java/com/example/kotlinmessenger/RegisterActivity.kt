@@ -2,7 +2,6 @@ package com.example.kotlinmessenger
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +10,8 @@ import android.util.Log
 import android.widget.Toast
 import com.example.kotlinmessenger.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -38,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
             openPhotoSelector()
         }
     }
+
 
     private fun performRegister() {
         val username = binding.usernameRegister.text.toString()
@@ -81,8 +83,10 @@ class RegisterActivity : AppCompatActivity() {
             // Set image to avatar button:
             selectedPhotoUri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            binding.avatarRegister.setBackgroundDrawable(bitmapDrawable)
+            //val bitmapDrawable = BitmapDrawable(bitmap)
+            //binding.avatarRegister.setBackgroundDrawable(bitmapDrawable)
+            binding.selectedImageRegister.setImageBitmap(bitmap) // Set selected image to CircleImageView
+            binding.avatarRegister.alpha = 0f // Set 'Upload photo' button opacity to 0
         }
     }
 
@@ -93,15 +97,46 @@ class RegisterActivity : AppCompatActivity() {
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
         ref.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
+            .addOnSuccessListener { it ->
                 Log.d("Register Activity", "Successfully uploaded image: ${it.metadata?.path}")
 
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("Register Activity", "File location: $it")
+
+                    val uid = FirebaseAuth.getInstance().uid ?: ""
+                    val username = binding.usernameRegister.text.toString()
+                    val avatar = it.toString()
+                    val user = User(uid, username, avatar)
+
+                    // Save user to database :
+                    saveUserToDatabase(user)
+
+                    // Open LatestMessages activity :
+                    val intent = Intent(this, LatestMessagesActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK) // Clear all former activities so Back button closes the application
+                    startActivity(intent)
                 }
             }
             .addOnFailureListener{
                 Log.d("Register Activity", getString(R.string.failed_photo_uploading_log))
             }
     }
+
+    private fun saveUserToDatabase(user: User) {
+        val ref = FirebaseDatabase.getInstance().getReference("users") // Inside field "users" in database
+
+        // Use user.uid as field name for each new entry:
+        ref.child(user.uid).setValue(user)
+            .addOnSuccessListener {
+                Log.d("Register Activity", getString(R.string.successfully_saved_user_to_dabatase_log))
+            }
+            .addOnFailureListener{
+                Log.d("Register Activity", getString(R.string.failed_saving_user_to_dabatase_log))
+            }
+    }
+}
+
+@IgnoreExtraProperties
+data class User(val uid: String, val username: String, val avatar: String) {
+    constructor() : this("", "", "")
 }
