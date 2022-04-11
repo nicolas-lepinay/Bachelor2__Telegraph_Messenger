@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger
+package com.example.kotlinmessenger.auth
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.ActivityRegisterBinding
+import com.example.kotlinmessenger.messages.LatestMessagesActivity
+import com.example.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
@@ -136,7 +139,3 @@ class RegisterActivity : AppCompatActivity() {
     }
 }
 
-@IgnoreExtraProperties
-data class User(val uid: String, val username: String, val avatar: String) {
-    constructor() : this("", "", "")
-}

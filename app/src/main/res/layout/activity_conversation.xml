@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232323"
+    tools:context=".messages.ConversationActivity">
+
+    <EditText
+        android:id="@+id/textInputConversation"
+        android:layout_width="313dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_input"
+        android:ems="10"
+        android:hint="Taper un message..."
+        android:inputType="textEmailAddress"
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#6B63B5"
+        android:textColorHint="#FF878787"
+        android:textColorLink="#6B63B5"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/sendButtonConversation"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_gradient_button"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputConversation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textInputConversation" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewConversation"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputConversation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="23dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sendButtonConversation"
+        app:layout_constraintEnd_toEndOf="@+id/sendButtonConversation"
+        app:layout_constraintStart_toStartOf="@+id/sendButtonConversation"
+        app:layout_constraintTop_toTopOf="@+id/sendButtonConversation"
+        app:srcCompat="@drawable/send_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
