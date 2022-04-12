@@ -12,6 +12,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -21,7 +22,8 @@ import kotlinx.android.synthetic.main.message_sent_row.view.*
 
 class ConversationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConversationBinding
-    val adapter = GroupAdapter<GroupieViewHolder>()
+    private val adapter = GroupAdapter<GroupieViewHolder>()
+    var receiverUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +33,9 @@ class ConversationActivity : AppCompatActivity() {
 
         binding.recyclerviewConversation.adapter = adapter
 
-        val user = intent.getParcelableExtra<User?>(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = user?.username
+        receiverUser = intent.getParcelableExtra<User?>(NewMessageActivity.USER_KEY)
+        supportActionBar?.title = receiverUser?.username
 
-        //setupDummyData()
         listenForMessages()
 
         binding.sendButtonConversation.setOnClickListener {
@@ -42,22 +43,12 @@ class ConversationActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupDummyData() {
-        val adapter = GroupAdapter<GroupieViewHolder>()
-        adapter.add(MessageReceivedItem("Hello Nick! How're you? :)"))
-        adapter.add(MessageSentItem("This is my reply."))
-        adapter.add(MessageReceivedItem("Hello Nick! How're you? :)"))
-        adapter.add(MessageSentItem("This is my reply."))
-        adapter.add(MessageReceivedItem("Hello Nick! How're you? :)"))
-        adapter.add(MessageSentItem("This is my reply."))
-        adapter.add(MessageReceivedItem("Hello Nick! How're you? :)"))
-        adapter.add(MessageSentItem("This is my reply."))
-
-        binding.recyclerviewConversation.adapter = adapter
-    }
-
+    // Fetch messages from database :
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("messages")
+        val senderId = FirebaseAuth.getInstance().uid // Logged-in user's id
+        val receiverId = receiverUser?.uid // Receiver's id
+
+        val ref = FirebaseDatabase.getInstance().getReference("conversations/$senderId/$receiverId")
 
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -66,10 +57,11 @@ class ConversationActivity : AppCompatActivity() {
                 if(message != null) {
                     // Message is sent by logged-in user :
                     if(message.senderId == FirebaseAuth.getInstance().uid) {
-                        adapter.add(MessageSentItem(message.text))
+                        val currentUser = LatestMessagesActivity.currentUser ?: return
+                        adapter.add(MessageSentItem(message.text, currentUser!!))
                     // Message is sent by another user :
                     } else {
-                        adapter.add(MessageReceivedItem(message.text))
+                        adapter.add(MessageReceivedItem(message.text, receiverUser))
                     }
                 }
             }
@@ -81,41 +73,61 @@ class ConversationActivity : AppCompatActivity() {
         })
     }
 
+    // Send message to Firebase Database :
     private fun performSendMessage() {
-        // SEND MESSAGE TO FIREBASE
-        val ref = FirebaseDatabase.getInstance().getReference("messages").push()
-
         val receiver = intent.getParcelableExtra<User?>(NewMessageActivity.USER_KEY)
         val receiverId = receiver?.uid
         val senderId = FirebaseAuth.getInstance().uid
-        val text = binding.textInputConversation.text.toString()
+        val text = binding.textInputConversation.text.toString().trim()
         val timestamp = System.currentTimeMillis() / 1000
 
         if(senderId == null || receiverId == null) return
+
+        // Current user's conversation :
+        val ref = FirebaseDatabase.getInstance().getReference("conversations/$senderId/$receiverId").push()
+        // Receiver's conversation :
+        val receiverRef = FirebaseDatabase.getInstance().getReference("conversations/$receiverId/$senderId").push()
+        // Latest message reference:
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("latest-messages/$senderId/$receiverId")
+        // Receiver's latest message reference:
+        val receiverLatestMessageRef = FirebaseDatabase.getInstance().getReference("latest-messages/$receiverId/$senderId")
 
         val message = Message(ref.key!!, text, senderId, receiverId, timestamp)
 
         ref.setValue(message)
             .addOnSuccessListener {
                 Log.d("Conversation", getString(R.string.successful_sent_message_log))
+                // Clears out text input :
+                binding.textInputConversation.text.clear()
+                // Scrolls down to last message :
+                binding.recyclerviewConversation.scrollToPosition(adapter.itemCount - 1)
             }
+        receiverRef.setValue(message)
+        latestMessageRef.setValue(message)
+        receiverLatestMessageRef.setValue(message)
     }
 }
 
-class MessageReceivedItem(val textContent: String): Item<GroupieViewHolder>() {
+class MessageReceivedItem(val textContent: String, val user: User?): Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.message_received_row
     }
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        // Load message's text content :
         viewHolder.itemView.messageReceivedRowText.text = textContent
+        // Load user's avatar :
+        Picasso.get().load(user?.avatar).into(viewHolder.itemView.messageReceivedRowAvatar)
     }
 }
 
-class MessageSentItem(val textContent: String): Item<GroupieViewHolder>() {
+class MessageSentItem(val textContent: String, val user: User?): Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.message_sent_row
     }
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        // Load message's text content :
         viewHolder.itemView.messageSentRowText.text = textContent
+        // Load logged-in user's avatar :
+        Picasso.get().load(user?.avatar).into(viewHolder.itemView.messageSentRowAvatar)
     }
 }

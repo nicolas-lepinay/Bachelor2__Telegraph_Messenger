@@ -14,7 +14,6 @@ import com.example.kotlinmessenger.messages.LatestMessagesActivity
 import com.example.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -45,9 +44,9 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun performRegister() {
-        val username = binding.usernameRegister.text.toString()
-        val email = binding.emailRegister.text.toString()
-        val password = binding.passwordRegister.text.toString()
+        val username = binding.usernameRegister.text.toString().trim()
+        val email = binding.emailRegister.text.toString().trim()
+        val password = binding.passwordRegister.text.toString().trim()
 
         if(username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, getString(R.string.incomplete_registration_toast), Toast.LENGTH_SHORT).show()

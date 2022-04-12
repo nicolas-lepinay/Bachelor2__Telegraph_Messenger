@@ -31,8 +31,8 @@ class LoginActivity: AppCompatActivity() {
     }
 
     private fun performLogin() {
-        val email = binding.emailLogin.text.toString()
-        val password = binding.passwordLogin.text.toString()
+        val email = binding.emailLogin.text.toString().trim()
+        val password = binding.passwordLogin.text.toString().trim()
 
         if(email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, getString(R.string.incomplete_login_toast), Toast.LENGTH_SHORT).show()
