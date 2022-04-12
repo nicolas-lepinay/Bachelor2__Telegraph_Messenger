@@ -16,4 +16,5 @@
     <string name="successfully_saved_user_to_dabatase_log">A new user was saved to Firebase database. ✔️</string>
     <string name="failed_saving_user_to_dabatase_log">An error occured while trying to save user to Firebase database. ❌</string>
     <string name="new_message_activity_title">Choisir un utilisateur</string>
+    <string name="successful_sent_message_log">Message sent successfully to Firebase database.</string>
 </resources>
