@@ -8,7 +8,7 @@
 
     <string name="incomplete_login_toast">⚠️ Veuillez saisir une adresse email et un mot de passe.</string>
     <string name="successful_login_log">Successfully signed in.</string>
-    <string name="successful_login_toast">✔️ Connexion réussie.</string>
+    <string name="successful_login_toast">Vous êtes connecté(e) ✔️</string>
     <string name="failed_login_log">"Failed while attempting to log in user. Error: </string>
     <string name="failed_login_toast">❌  Echec lors de l\'inscription. Veuillez vérifier que votre adresse email est valide.</string>
     <string name="successful_avatar_selection">Image selected successfully.</string>

@@ -44,7 +44,7 @@ class LoginActivity: AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
                 // Show successful login message :
                 Log.d("Main", getString(R.string.successful_login_log))
-                Toast.makeText(this, getString(R.string.successful_login_toast), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.successful_login_toast), Toast.LENGTH_SHORT).show()
 
                 // Open LatestMessages activity :
                 val intent = Intent(this, LatestMessagesActivity::class.java)

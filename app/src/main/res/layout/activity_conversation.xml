@@ -16,7 +16,7 @@
         android:background="@drawable/rounded_input"
         android:ems="10"
         android:hint="Taper un message..."
-        android:inputType="textEmailAddress"
+        android:inputType="textMultiLine|textShortMessage"
         android:paddingLeft="25dp"
         android:paddingTop="15dp"
         android:paddingRight="20dp"

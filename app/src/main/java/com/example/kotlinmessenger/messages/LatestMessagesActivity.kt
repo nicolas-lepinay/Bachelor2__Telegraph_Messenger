@@ -9,20 +9,20 @@ import android.view.MenuItem
 import com.example.kotlinmessenger.auth.LoginActivity
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.databinding.ActivityLatestMessagesBinding
+import com.example.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.kotlinmessenger.models.Message
 import com.example.kotlinmessenger.models.User
+import com.example.kotlinmessenger.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_conversation.*
-import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class LatestMessagesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLatestMessagesBinding
     val adapter = GroupAdapter<GroupieViewHolder>()
+    val latestMessagesMap = HashMap<String, Message>()
 
     companion object {
         var currentUser: User? = null
@@ -32,15 +32,19 @@ class LatestMessagesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLatestMessagesBinding.inflate(layoutInflater)
         val view = binding.root
-
+        setContentView(view)
         binding.recyclerviewLatestMessages.adapter = adapter
 
         verifyLogin() // Check if user is logged in
         fetchCurrentUser() // Fetch logged-in user :
+        listenForLatestMessages() // Listen for new messages
 
-        setContentView(view)
-
-        listenForLatestMessages()
+        adapter.setOnItemClickListener{item, view ->
+            val intent = Intent(this, ConversationActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(USER_KEY, row.user)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,7 +85,10 @@ class LatestMessagesActivity : AppCompatActivity() {
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 currentUser = snapshot.getValue(User::class.java)
-                Log.d("Latest Activity", "Current logged-in user is: ${currentUser?.username}")
+                // Display user's avatar and username :
+                binding.latestMessageUserUsername.text = currentUser?.username
+                Picasso.get().load(currentUser?.avatar).into(binding.latestMessageUserAvatar)
+                //Log.d("Latest Activity", "Current logged-in user is: ${currentUser?.username}")
             }
             override fun onCancelled(error: DatabaseError) {}
 
@@ -94,12 +101,14 @@ class LatestMessagesActivity : AppCompatActivity() {
         ref.addChildEventListener(object: ChildEventListener {
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java) ?: return
-                adapter.add(LatestMessageRow(message))
+                latestMessagesMap[snapshot.key!!] = message
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java) ?: return
-                adapter.add(LatestMessageRow(message))
+                latestMessagesMap[snapshot.key!!] = message
+                refreshRecyclerViewMessages()
 
             }
             override fun onCancelled(error: DatabaseError) {}
@@ -108,14 +117,12 @@ class LatestMessagesActivity : AppCompatActivity() {
         })
     }
 
-    class LatestMessageRow(val message: Message): Item<GroupieViewHolder>() {
-        override fun getLayout(): Int {
-            return R.layout.latest_message_row
-        }
-
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            //viewHolder.itemView.latestMessageRowUsername.text = "???"
-            viewHolder.itemView.latestMessageRowText.text = message.text
+    private fun refreshRecyclerViewMessages() {
+        adapter.clear()
+        latestMessagesMap.values.forEach {
+            adapter.add(LatestMessageRow(it))
         }
     }
+
+
 }

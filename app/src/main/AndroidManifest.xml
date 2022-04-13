@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="💬"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="💬  Telegraph Messenger"
+        android:icon="@drawable/telegraph_icon"
+        android:roundIcon="@drawable/telegraph_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMessenger"
         android:usesCleartextTraffic="true">
