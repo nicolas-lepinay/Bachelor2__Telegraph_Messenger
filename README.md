@@ -1,6 +1,6 @@
 # 𝐓𝖊𝖑𝖊𝖌𝖗𝖆𝖕𝖍
 
-![telegraph_logo](https://user-images.githubusercontent.com/87578863/160559792-a4c450bd-c926-4241-a87e-837ea9e4d1d5.png)
+![Telegraph_Logo](https://user-images.githubusercontent.com/87578863/184404181-1b2d68dd-7da3-46a6-a214-4c38d2d14ac9.png)
 
 
 ✉️ 𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐩𝐡 : a fully-functional messaging application.
